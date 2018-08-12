@@ -30,6 +30,9 @@ if (keyboard_check(vk_down))y+= 25;
 if (keyboard_check(vk_left))x-= 25;
 if (keyboard_check(vk_right))x+= 25;
 
+
+instance_deactivate_all(true);
+instance_activate_region(view_xview-64,view_yview-64,view_wview+128,view_hview+128,true);
 </string>
           </argument>
         </arguments>

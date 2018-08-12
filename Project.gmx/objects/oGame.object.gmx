@@ -27,87 +27,141 @@
             <kind>1</kind>
             <string>randomize();
 var blockSize = 32;
+var TopBound = 4;
+var BottomBound = 80;
 var surfaceLevel = 40;
-var variation = 1;
+var stoneLevel = 56
+var Variation = 1;
 var roomHeight = room_height div blockSize;
 var roomWidth = room_width div blockSize;
 
-var BiomeSize = 64;
+var BiomeSize = 128;
 
-var bwVariation = 1,
+
 var bwTop = oSnow
 
-var bhVariation = 1,
+
+
 var bhTop = oGrass,
 
-var bpVariation = 1;
+
+
 var bpTop = oGrass;
 
 
-var bdVariation = 1;
+
 var bdTop = oSand
 
+var bmhTop = oGrass;
 var frozenDepth = 7;
 
 
 var CurrentBiomeSize = 0;
 var CurrentBiome = 0;
 for(var i = 0; i &lt; roomWidth;i++){
-    frozenDepth += choose(-1,0,0,0,0,0,0,0,0,1);
-    clamp(frozenDepth,6,16)
+    stoneLevel = (surfaceLevel + 4) + choose(-2,-1,0,1,2);
+    frozenDepth += surfaceLevel + choose(-1,0,0,0,0,0,0,1);
+    
     
     if(CurrentBiomeSize &gt;= BiomeSize){
-        CurrentBiome = irandom_range(0,3);
+        CurrentBiome = irandom_range(0,4);
         CurrentBiomeSize = 0;
     }
     for(var k = 0; k &lt; roomHeight; k++){
         if(k = surfaceLevel){
                 if(CurrentBiome == 0){
-                    instance_create(i*blockSize,k*blockSize,bpTop)
+                  instance_create(i*32,k*32,bwTop)
+                   
                 }
                 if(CurrentBiome == 1){
-                    instance_create(i*blockSize,k*blockSize,bhTop)
+                  
+                     instance_create(i*32,k*32,bhTop)
                 }
                 if(CurrentBiome == 2){
-                    instance_create(i*blockSize,k*blockSize,bwTop)
+                   
+                   instance_create(i*32,k*32,bpTop)
                 }
                  if(CurrentBiome == 3){
-                    instance_create(i*blockSize,k*blockSize,bdTop)
+                 
+                     instance_create(i*32,k*32,bdTop)
                 }
-        }
+                 if(CurrentBiome == 4){
+                 
+                     instance_create(i*32,k*32,bmhTop)
+                }
+        } else {
         if(k &gt; surfaceLevel){
-                if(CurrentBiome == 2 and k &gt; (surfaceLevel + frozenDepth)){
-                    instance_create(i*blockSize,k*blockSize,oDirt)
-                } else if (CurrentBiome == 2 and k &lt; (surfaceLevel + frozenDepth)){
-                    instance_create(i*blockSize,k*blockSize,oFrozenDirt) 
+        //stone
+              
+         
+           if(k &gt; stoneLevel and CurrentBiome = 0){
+        
+             instance_create(i*32,k*32,oStone)
+           }
+           if(k &gt; stoneLevel and CurrentBiome = 1){
+       
+            instance_create(i*32,k*32,oStone)
+           }
+           if(k &gt; stoneLevel and CurrentBiome = 2){
+            instance_create(i*32,k*32,oStone)
+           }
+           if(k &gt; stoneLevel and CurrentBiome = 4){
+            instance_create(i*32,k*32,oStone)
+           }
+           if(k &gt; stoneLevel and CurrentBiome = 3){
+         instance_create(i*32,k*32,oStone)
+           } else if(CurrentBiome == 0 and k &gt; (surfaceLevel + frozenDepth)){
+                    
+                      instance_create(i*32,k*32,oDirt)
+                    
+                } else if (CurrentBiome == 0 and k &lt; (surfaceLevel + frozenDepth)){
+                    
+                     instance_create(i*32,k*32,oFrozenDirt)
+                     
                 } else if(CurrentBiome == 3 and k &gt; (surfaceLevel + frozenDepth)){
-                    instance_create(i*blockSize,k*blockSize,oDirt)
+                    
+                        instance_create(i*32,k*32,oDirt)
+                    
                 } else if (CurrentBiome == 3 and k &lt; (surfaceLevel + frozenDepth)){
-                    instance_create(i*blockSize,k*blockSize,bdTop) 
+                    
+                       instance_create(i*32,k*32,oSand)
+                    
                 } else {
-                    instance_create(i*blockSize,k*blockSize,oDirt)
-                }
+                 instance_create(i*32,k*32,oDirt)
+                }}
                 
+                
+        //dirt
+        
                 
                 
                
-        }
+        } 
         
     }
+        if(surfaceLevel &lt;= TopBound) {
+        surfaceLevel += choose(2,1,0)
+        } else if (surfaceLevel &gt;= BottomBound) {
+        surfaceLevel += choose(-2,-1,0)
+        }
          if(CurrentBiome == 0){
-        surfaceLevel += choose(-bpVariation,0,bpVariation)
+        surfaceLevel += choose(-Variation,0,Variation)
         }
          if(CurrentBiome == 1){
-        surfaceLevel += choose(-bhVariation*2,-bhVariation,0,bhVariation,bhVariation*2,)
+        surfaceLevel += choose(-Variation*2,-Variation,0,Variation,Variation*2,)
         }
          if(CurrentBiome == 2){
-        surfaceLevel += choose(-bwVariation,0,0,0,bwVariation)
+        surfaceLevel += choose(-Variation,0,0,0,Variation)
         }
         if(CurrentBiome == 3){
-        surfaceLevel += choose(-bdVariation,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,bdVariation)
+        surfaceLevel += choose(-Variation,0,0,0,0,0,0,0,0,0,Variation)
+        }
+        if(CurrentBiome == 4){
+        surfaceLevel += choose(-Variation*3,-Variation*2,-Variation,0,Variation,Variation*2,Variation*3)
         }
     CurrentBiomeSize += 1;
 }
+instance_create(x,y,oFollow)
 </string>
           </argument>
         </arguments>
